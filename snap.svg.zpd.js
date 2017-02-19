@@ -876,6 +876,38 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
             }
         };
 
+        // Inspired by https://github.com/justin-hackin/snap.svg.zpd
+        var zoomToElements = function(elements, filling) {
+            var self = this;
+
+            if (snapsvgzpd.dataStore.hasOwnProperty(self.id)) {
+                var set = Snap.set();
+                for (var i = 0; i < elements.length; i += 1) {
+                    set.push(elements[i]);
+                }
+                var zpdElement = snapsvgzpd.dataStore[self.id].element;
+                var options = snapsvgzpd.dataStore[self.id].options;
+                var rootSvg = snapsvgzpd.dataStore[self.id].data.root;
+                var width = rootSvg.clientWidth;
+                var height = rootSvg.clientHeight;
+
+                var bbox = set.getBBox();
+                var minScale = (!!options.zoomThreshold)? options.zoomThreshold[0] : Number.NEGATIVE_INFINITY;
+                var maxScale = (!!options.zoomThreshold)? options.zoomThreshold[1] : Number.POSITIVE_INFINITY;
+                var realScale =  filling / Math.max(bbox.width / width, bbox.height / height);
+                var scale = Math.min(Math.max(realScale, minScale), maxScale);
+
+                var x = (bbox.x + bbox.x2) / 2;
+                var y = (bbox.y + bbox.y2) / 2;
+                var translateX = width / 2 - scale * x;
+                var translateY = height / 2 - scale * y;
+                var m = Snap.matrix(scale, 0, 0, scale, translateX, translateY);
+                zpdElement.transform(m);
+            }
+        };
+
+        Paper.prototype.zoomToElements = zoomToElements;
+
         Paper.prototype.zpd = zpd;
         Paper.prototype.zoomTo = zoomTo;
         Paper.prototype.panTo = panTo;
