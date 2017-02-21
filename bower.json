@@ -1,8 +1,8 @@
 {
   "name": "snap.svg.zpd",
   "main": "snap.svg.zpd.js",
-  "version": "0.0.11",
-  "homepage": "https://github.com/huei90/snap.svg.zpd",
+  "version": "0.0.15",
+  "homepage": "https://github.com/ssi-sma/snap.svg.zpd",
   "authors": [
     "Huei <huei90@gmail.com>"
   ],
