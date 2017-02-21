@@ -888,8 +888,8 @@ SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformTo
                 var zpdElement = snapsvgzpd.dataStore[self.id].element;
                 var options = snapsvgzpd.dataStore[self.id].options;
                 var rootSvg = snapsvgzpd.dataStore[self.id].data.root;
-                var width = rootSvg.clientWidth;
-                var height = rootSvg.clientHeight;
+                var width = rootSvg.width.baseVal.value;
+                var height = rootSvg.height.baseVal.value;
 
                 var bbox = set.getBBox();
                 var minScale = (!!options.zoomThreshold)? options.zoomThreshold[0] : Number.NEGATIVE_INFINITY;
